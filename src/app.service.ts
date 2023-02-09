@@ -6,18 +6,18 @@ import { InfluxService } from './influxdb/influxdb.service';
 export class AppService {
   constructor(private influxService: InfluxService) {}
 
-  getHello(): string {
+  writeTemperature(params): string {
     const writeApi = this.influxService.getWriteApi('Dyvo', 'Test');
 
-    const point = this.influxService.createPoint('node')
+    const point = this.influxService.createPoint('temperature')
         .tag('sensor_id', 'TLM010')
-        .floatField('value', 80);
+        .floatField('value', params.temperature);
   
     writeApi.writePoint(point);
     writeApi.close().then(() => {
       console.log('WRITE FINISHED')
     })
 
-    return 'Hello World!';
+    return `Temperature written, value - ${params.temperature}`;
   }
 }

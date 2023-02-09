@@ -2,13 +2,17 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { InfluxModule } from './influxdb/influxdb.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [InfluxModule.forRoot({
-    url: 'http://localhost:8086/',
-    token: '8-LBH6AzX2QrX2JFJ6rLXXxPkPGnH3_gMAIvrnSa_gjNNcR2V2sQr3KiU3GJHz35WudF8kv612GLNozjQAyvPQ==',
+  imports: [
+    ConfigModule.forRoot(),
+    InfluxModule.forRoot({
+    url: process.env.INFLUX_URL,
+    token: process.env.INFLUX_TOKEN,
     global: true,
-  })],
+  }),
+],
   controllers: [AppController],
   providers: [AppService],
 })
