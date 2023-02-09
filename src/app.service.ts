@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InfluxService } from './influxdb/influxdb.service';
 
-
 @Injectable()
 export class AppService {
   constructor(private influxService: InfluxService) {}
